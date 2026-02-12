@@ -1,0 +1,37 @@
+{
+    "basics": {
+        "name": "Damaris Benny",
+        "role": "Postdoctoral Researcher",
+        "department": "Department of Clinical Medicine",
+        "university": "University of Bergen, Norway",
+        "focus": "Toxicology & Microplastics",
+        "email_uib": "Damaris.Daniel@uib.no",
+        "email_personal": "damarisbenny@gmail.com",
+        "scholar_url": "https://scholar.google.com/citations?user=uZXXYEIAAAAJ&hl=en",
+        "github_url": "https://github.com/damarisbenny"
+    },
+    "about": [
+        "I am a Postdoctoral Researcher at the Department of Clinical Medicine, University of Bergen, Norway.",
+        "My research focuses on the intersection of Toxicology and Microplastics, specifically investigating their impact on human health. I am dedicated to understanding how environmental contaminants affect biological systems and contributing to the scientific understanding of plastic pollution."
+    ],
+    "research_interests": [
+        {
+            "title": "Microplastics & Human Health",
+            "description": "Investigating the presence, transport, and toxicological effects of microplastics in human tissues and fluids."
+        },
+        {
+            "title": "Toxicology",
+            "description": "Assessing the impacts of environmental pollutants on cellular health and physiological functions."
+        }
+    ],
+    "service": {
+        "academic": [
+            "Reviewer for international toxicology journals",
+            "Conference organization committee member"
+        ],
+        "teaching": [
+            "Lecturer in Environmental Toxicology",
+            "Supervisor for Master's students"
+        ]
+    }
+}

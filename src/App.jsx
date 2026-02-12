@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Github, BookOpen, GraduationCap, Link as LinkIcon, FileText, User } from 'lucide-react';
 import PublicationList from './components/PublicationList';
+import profile from './data/profile.json';
 
 function App() {
     const [activeSection, setActiveSection] = useState('home');
@@ -18,8 +19,8 @@ function App() {
             {/* Sidebar Navigation */}
             <aside className="w-full md:w-64 bg-academic-blue text-white md:h-screen md:fixed flex flex-col justify-between p-6 z-10">
                 <div>
-                    <h1 className="text-2xl font-bold mb-2">Damaris Benny</h1>
-                    <p className="text-blue-200 text-sm mb-8">Postdoctoral Researcher<br />Toxicology & Microplastics</p>
+                    <h1 className="text-2xl font-bold mb-2">{profile.basics.name}</h1>
+                    <p className="text-blue-200 text-sm mb-8">{profile.basics.role}<br />{profile.basics.focus}</p>
 
                     <nav className="space-y-4">
                         {['home', 'research', 'publications', 'roles', 'contact'].map((item) => (
@@ -35,13 +36,13 @@ function App() {
                 </div>
 
                 <div className="mt-8 md:mt-0 flex space-x-4">
-                    <a href="https://github.com/damarisbenny" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300">
+                    <a href={profile.basics.github_url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-300">
                         <Github size={20} />
                     </a>
-                    <a href="https://scholar.google.com/citations?user=uZXXYEIAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="hover:text-blue-300">
+                    <a href={profile.basics.scholar_url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-300">
                         <GraduationCap size={20} />
                     </a>
-                    <a href="mailto:Damaris.Daniel@uib.no" className="hover:text-blue-300">
+                    <a href={`mailto:${profile.basics.email_uib}`} className="hover:text-blue-300">
                         <Mail size={20} />
                     </a>
                 </div>
@@ -56,12 +57,13 @@ function App() {
                         <User className="mr-3 text-academic-accent" /> About Me
                     </h2>
                     <div className="prose prose-slate lg:prose-lg text-gray-700">
-                        <p className="mb-4">
-                            I am a <strong>Postdoctoral Researcher</strong> at the <strong>Department of Clinical Medicine, University of Bergen, Norway</strong>.
-                        </p>
-                        <p className="mb-4">
-                            My research focuses on the intersection of <strong>Toxicology</strong> and <strong>Microplastics</strong>, specifically investigating their impact on human health. I am dedicated to understanding how environmental contaminants affect biological systems and contributing to the scientific understanding of plastic pollution.
-                        </p>
+                        {profile.about.map((paragraph, index) => (
+                            <p key={index} className="mb-4" dangerouslySetInnerHTML={{ __html: paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                        ))}
+                        {/* Note: In real app, might want a markdown parser, but simple replacement or just passing text is fine. 
+                 The JSON has plain text. I'll render it as text for safety, or if I want bolding I need to handle it.
+                 Current JSON is plain text strings. I'll just render them. 
+              */}
                     </div>
                 </section>
 
@@ -71,14 +73,12 @@ function App() {
                         <BookOpen className="mr-3 text-academic-accent" /> Research Interests
                     </h2>
                     <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                        <h3 className="text-xl font-semibold mb-3 text-academic-blue">Microplastics & Human Health</h3>
-                        <p className="text-gray-700 mb-4">
-                            Investigating the presence, transport, and toxicological effects of microplastics in human tissues and fluids.
-                        </p>
-                        <h3 className="text-xl font-semibold mb-3 text-academic-blue">Toxicology</h3>
-                        <p className="text-gray-700">
-                            Assessing the impacts of environmental pollutants on cellular health and physiological functions.
-                        </p>
+                        {profile.research_interests.map((interest, index) => (
+                            <div key={index} className="mb-4 last:mb-0">
+                                <h3 className="text-xl font-semibold mb-2 text-academic-blue">{interest.title}</h3>
+                                <p className="text-gray-700">{interest.description}</p>
+                            </div>
+                        ))}
                     </div>
                 </section>
 
@@ -102,15 +102,17 @@ function App() {
                         <div>
                             <h3 className="text-lg font-semibold text-gray-800">Academic Service</h3>
                             <ul className="list-disc list-inside text-gray-700 mt-2 space-y-1">
-                                <li>Reviewer for international toxicology journals</li>
-                                <li>Conference organization committee member</li>
+                                {profile.service.academic.map((item, index) => (
+                                    <li key={index}>{item}</li>
+                                ))}
                             </ul>
                         </div>
                         <div>
                             <h3 className="text-lg font-semibold text-gray-800">Teaching</h3>
                             <ul className="list-disc list-inside text-gray-700 mt-2 space-y-1">
-                                <li>Lecturer in Environmental Toxicology</li>
-                                <li>Supervisor for Master's students</li>
+                                {profile.service.teaching.map((item, index) => (
+                                    <li key={index}>{item}</li>
+                                ))}
                             </ul>
                         </div>
                     </div>
@@ -125,17 +127,17 @@ function App() {
                         <div className="space-y-4">
                             <div className="flex items-center">
                                 <Mail className="w-5 h-5 text-gray-500 mr-3" />
-                                <a href="mailto:Damaris.Daniel@uib.no" className="text-academic-accent hover:underline">Damaris.Daniel@uib.no</a>
+                                <a href={`mailto:${profile.basics.email_uib}`} className="text-academic-accent hover:underline">{profile.basics.email_uib}</a>
                                 <span className="mx-2 text-gray-400">|</span>
-                                <a href="mailto:damarisbenny@gmail.com" className="text-academic-accent hover:underline">damarisbenny@gmail.com</a>
+                                <a href={`mailto:${profile.basics.email_personal}`} className="text-academic-accent hover:underline">{profile.basics.email_personal}</a>
                             </div>
                             <div className="flex items-center">
                                 <GraduationCap className="w-5 h-5 text-gray-500 mr-3" />
-                                <a href="https://scholar.google.com/citations?user=uZXXYEIAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" className="text-academic-accent hover:underline">Google Scholar Profile</a>
+                                <a href={profile.basics.scholar_url} target="_blank" rel="noopener noreferrer" className="text-academic-accent hover:underline">Google Scholar Profile</a>
                             </div>
                             <div className="flex items-center">
                                 <Github className="w-5 h-5 text-gray-500 mr-3" />
-                                <a href="https://github.com/damarisbenny" target="_blank" rel="noopener noreferrer" className="text-academic-accent hover:underline">github.com/damarisbenny</a>
+                                <a href={profile.basics.github_url} target="_blank" rel="noopener noreferrer" className="text-academic-accent hover:underline">github.com/{profile.basics.github_url.split('/').pop()}</a>
                             </div>
                         </div>
                     </div>
